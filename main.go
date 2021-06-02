@@ -1,34 +1,19 @@
 package myid
 
 import (
-	"math/rand"
-	"time"
+	"github.com/google/uuid"
+	"github.com/pkg/errors"
 )
-
-func init() { rand.Seed(time.Now().UnixNano()) }
 
 // Generate generates ID.
 //
 // ID Spec:
-//   length=8, [0-9,a-z,A-Z]
+//   UUID v4
 //
-// TODO: Better method?
-//
-func Generate() string {
-	const str = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-	// random returns random int in [0,n).
-	random := func(n int) int { return rand.Intn(n) }
-
-	return string([]byte{
-		str[random(len(str))], str[random(len(str))],
-		str[random(len(str))], str[random(len(str))],
-		str[random(len(str))], str[random(len(str))],
-		str[random(len(str))], str[random(len(str))],
-	})
+func Generate() (string, error) {
+	id, err := uuid.NewRandom()
+	if err != nil {
+		return "", errors.Wrap(err, "failed to uuid.NewRandom()")
+	}
+	return id.String(), nil
 }
-
-// // TODO: Implement
-// func IsValid(s string) bool {
-// 	return false
-// }
