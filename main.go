@@ -27,3 +27,8 @@ func Generate() string {
 		str[random(len(str))], str[random(len(str))],
 	})
 }
+
+// // TODO: Implement
+// func IsValid(s string) bool {
+// 	return false
+// }
